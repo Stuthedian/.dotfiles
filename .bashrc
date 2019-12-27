@@ -135,6 +135,7 @@ random_emoji()
 #export PS1='$(random_emoji) \[\e[36;1m\]\$\[\e[0m\] '
 CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB   
 set -o vi
+PROMPT_COMMAND='echo -en "\033]0;$(pwd|rev|cut -d "/" -f 1,2|rev)\a"'
 
 function stand()
 {
