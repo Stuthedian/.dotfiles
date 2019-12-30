@@ -16,8 +16,9 @@ autocmd FileType c :set cindent
 set tildeop
 set colorcolumn=80
 nnoremap <Space> <Nop>
-let mapleader = "\<Space>"
-"nmap <Leader>[ a[]<Esc>i
+"inoremap <F2> <80>k2
+let mapleader = "\<F2>"
+imap <Leader>[ a[]<Esc>i
 "nmap <Leader>9 a()<Esc>i
 "nmap <Leader>" a""<Esc>i
 "nmap <Leader>' a''<Esc>i
@@ -44,7 +45,7 @@ if &term =~ 'xterm'
 endif
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
-source ~/Docs/cscope_maps.vim
+"source ~/Docs/cscope_maps.vim
 
 nnoremap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>                  
 nnoremap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>                  
@@ -62,13 +63,13 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:airline#extensions#tabline#formatter = 'unique_tail'
 "experimental
 "window
-"nmap <leader>sw<left>  :topleft  vnew<CR>
-"nmap <leader>sw<right> :botright vnew<CR>
-"nmap <leader>sw<up>    :topleft  new<CR>
-"nmap <leader>sw<down>  :botright new<CR>
+nmap <Leader>sw<left>  :topleft  vnew<CR>
+nmap <Leader>sw<right> :botright vnew<CR>
+nmap <Leader>sw<up>    :topleft  new<CR>
+nmap <Leader>sw<down>  :botright new<CR>
 
 " buffer
-"nmap <leader>s<left>   :leftabove  vnew<CR>
-"nmap <leader>s<right>  :rightbelow vnew<CR>
-"nmap <leader>s<up>     :leftabove  new<CR>
-"nmap <leader>s<down>   :rightbelow new<CR>
+nmap <Leader>s<left>   :leftabove  vnew<CR>
+nmap <Leader>s<right>  :rightbelow vnew<CR>
+nmap <Leader>s<up>     :leftabove  new<CR>
+nmap <Leader>s<down>   :rightbelow new<CR>
