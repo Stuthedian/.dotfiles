@@ -26,7 +26,6 @@ inoremap(; ()<Esc>i
 "inoremap(( (
 inoremap{; <Esc>o{<CR>}<Esc>O
 "inoremap{{ {
-"inoremap <s-9> <Nop>
 if &term =~ 'xterm'
   let &t_SI .= "\<Esc>[6 q" " solid underscore
   let &t_EI .= "\<Esc>[2 q" " solid block
@@ -40,16 +39,22 @@ endif
 "source ~/Docs/cscope_maps.vim
 
 "window
-nmap <Leader>sw<left>  :topleft  vnew<CR>
-nmap <Leader>sw<right> :botright vnew<CR>
-nmap <Leader>sw<up>    :topleft  new<CR>
-nmap <Leader>sw<down>  :botright new<CR>
+nnoremap <Leader>wh :topleft  vnew<CR>
+nnoremap <Leader>wl :botright vnew<CR>
+nnoremap <Leader>wk :topleft  new<CR>
+nnoremap <Leader>wj :botright new<CR>
 
-" buffer
-nmap <Leader>s<left>   :leftabove  vnew<CR>
-nmap <Leader>s<right>  :rightbelow vnew<CR>
-nmap <Leader>s<up>     :leftabove  new<CR>
-nmap <Leader>s<down>   :rightbelow new<CR>
+"buffer
+nnoremap <Leader>bh  :leftabove  vnew<CR>
+nnoremap <Leader>bl  :rightbelow vnew<CR>
+nnoremap <Leader>bk  :leftabove  new<CR>
+nnoremap <Leader>bj  :rightbelow new<CR>
+
+"Window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 "Airline
 let g:airline#extensions#tabline#enabled = 1
