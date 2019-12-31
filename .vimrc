@@ -6,6 +6,7 @@ set nowrap
 set tabstop=4
 set shiftwidth=4
 set tildeop
+set background=dark
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
 
@@ -16,7 +17,7 @@ let mapleader = "\<F2>"
 nnoremap <Space> <Nop>
 imap <Leader>[ a[]<Esc>i
 "nmap <Leader>9 a()<Esc>i
-"nmap <Leader>" a""<Esc>i
+
 "nmap <Leader>' a''<Esc>i
 "nmap <Leader>{ o{<Esc>o}<Esc>O
 "nmap <Leader>, a<.h><Esc>T<i
@@ -26,7 +27,7 @@ inoremap(; ()<Esc>i
 "inoremap(( (
 inoremap{; <Esc>o{<CR>}<Esc>O
 "inoremap{{ {
-if &term =~ 'xterm'
+if &term =~ 'xterm\|screen'
   let &t_SI .= "\<Esc>[6 q" " solid underscore
   let &t_EI .= "\<Esc>[2 q" " solid block
   " 1 or 0 -> blinking block
