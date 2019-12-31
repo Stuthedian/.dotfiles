@@ -120,7 +120,7 @@ alias g='gedit'
 alias mtargz='tar -xzf'
 alias mtarbz='tar -xjf'
 alias tips='(g ~/Docs/tips ~/Docs/key_combinations) &'
-#alias make_netconf='cd ~/eltex-netconf/base/me5000/fmc16 && ~/Docs/builder/builder.sh make netconf'
+stty -ixon
 export PS1='\[\e[36;1m\]\$\[\e[0m\] '
 cd ~/Docs
 export LONG_RUNNING_COMMAND_TIMEOUT=10
