@@ -1,4 +1,6 @@
 set nocompatible 
+set mouse=n
+set ttymouse=xterm2
 set showcmd
 set hidden
 set number relativenumber
