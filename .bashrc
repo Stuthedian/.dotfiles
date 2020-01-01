@@ -125,6 +125,7 @@ export PS1='\[\e[36;1m\]\$\[\e[0m\] '
 cd ~/Docs
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
+export EDITOR=vim
 source /etc/profile.d/undistract-me.sh
 #emojis=(😺 😸 😹 😻 😼 😽 🙀 😿 😾)
 random_emoji()
