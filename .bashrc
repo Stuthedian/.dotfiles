@@ -121,7 +121,7 @@ alias mtargz='tar -xzf'
 alias mtarbz='tar -xjf'
 alias tips='(g ~/Docs/tips ~/Docs/key_combinations) &'
 stty -ixon
-export PS1='\[\e[33;1m\]\w\n\[\e[36;1m\]\$\[\e[0m\] '
+export PS1='\[\e[43m\]\[\e[30m\]\w\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] '
 cd ~/Docs
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
