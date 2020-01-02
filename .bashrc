@@ -121,19 +121,12 @@ alias mtargz='tar -xzf'
 alias mtarbz='tar -xjf'
 alias tips='(g ~/Docs/tips ~/Docs/key_combinations) &'
 stty -ixon
-export PS1='\[\e[36;1m\]\$\[\e[0m\] '
+export PS1='\[\e[33;1m\]\w\n\[\e[36;1m\]\$\[\e[0m\] '
 cd ~/Docs
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
 source /etc/profile.d/undistract-me.sh
-#emojis=(😺 😸 😹 😻 😼 😽 🙀 😿 😾)
-random_emoji()
-{
-	selected_emoji=${emojis[$RANDOM % ${#emojis[@]}]}
-	echo $selected_emoji
-}
-#export PS1='$(random_emoji) \[\e[36;1m\]\$\[\e[0m\] '
 CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB   
 set -o vi
 
