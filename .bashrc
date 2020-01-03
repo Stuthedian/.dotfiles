@@ -116,11 +116,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias g='gedit'
-alias mtargz='tar -xzf'
-alias mtarbz='tar -xjf'
-alias tips='(g ~/Docs/tips ~/Docs/key_combinations) &'
-stty -ixon
+stty -ixon # Disable flow control
 export PS1='\[\e[43m\]\[\e[30m\]\w\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] '
 cd ~/Docs
 export LONG_RUNNING_COMMAND_TIMEOUT=10
@@ -128,7 +124,7 @@ export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
 source /etc/profile.d/undistract-me.sh
 CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB   
-set -o vi
+set -o vi # Vi-mode in bash
 
 function stand()
 {
