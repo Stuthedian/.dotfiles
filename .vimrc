@@ -17,18 +17,17 @@ autocmd FileType c :set cindent
 
 let mapleader = "\<F2>"
 nnoremap <Space> <Nop>
-imap <Leader>[ a[]<Esc>i
-"nmap <Leader>9 a()<Esc>i
 
-"nmap <Leader>' a''<Esc>i
-"nmap <Leader>{ o{<Esc>o}<Esc>O
-"nmap <Leader>, a<.h><Esc>T<i
-"nmap <Leader>; A;<Esc>
-"nmap <Leader>f a()<Esc><Leader>{
-inoremap(; ()<Esc>i
-"inoremap(( (
-inoremap{; <Esc>o{<CR>}<Esc>O
-"inoremap{{ {
+"Autocomplete braces, quotes
+inoremap( ()<Esc>i
+inoremap(( (
+inoremap{ <Esc>o{<CR>}<Esc>O
+inoremap{{ {
+inoremap" ""<Esc>i
+inoremap"" "
+inoremap' ''<Esc>i
+inoremap'' '
+
 if &term =~ 'xterm\|screen'
   let &t_SI .= "\<Esc>[6 q" " solid underscore
   let &t_EI .= "\<Esc>[2 q" " solid block
@@ -41,13 +40,13 @@ if &term =~ 'xterm\|screen'
 endif
 "source ~/Docs/cscope_maps.vim
 
-"window
+"Window
 nnoremap <Leader>wh :topleft  vnew<CR>
 nnoremap <Leader>wl :botright vnew<CR>
 nnoremap <Leader>wk :topleft  new<CR>
 nnoremap <Leader>wj :botright new<CR>
 
-"buffer
+"Buffer
 nnoremap <Leader>bh  :leftabove  vnew<CR>
 nnoremap <Leader>bl  :rightbelow vnew<CR>
 nnoremap <Leader>bk  :leftabove  new<CR>
