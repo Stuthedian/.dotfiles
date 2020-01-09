@@ -1,0 +1,22 @@
+[:8468b899-c495-4b9b-80c7-9f6ee003eb99]
+foreground-color='rgb(131,148,150)'
+visible-name='Main'
+palette=['rgb(0,0,0)', 'rgb(205,0,0)', 'rgb(0,205,0)', 'rgb(205,205,0)', 'rgb(0,0,238)', 'rgb(205,0,205)', 'rgb(0,205,205)', 'rgb(229,229,229)', 'rgb(127,127,127)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(255,255,0)', 'rgb(92,92,255)', 'rgb(255,0,255)', 'rgb(0,255,255)', 'rgb(255,255,255)']
+use-transparent-background=false
+use-theme-colors=false
+use-theme-transparency=true
+background-color='rgb(0,43,54)'
+background-transparency-percent=55
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+background-color='rgb(0,43,54)'
+background-transparency-percent=55
+palette=['rgb(0,0,0)', 'rgb(205,0,0)', 'rgb(0,205,0)', 'rgb(205,205,0)', 'rgb(0,0,238)', 'rgb(205,0,205)', 'rgb(0,205,205)', 'rgb(229,229,229)', 'rgb(127,127,127)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(255,255,0)', 'rgb(92,92,255)', 'rgb(255,0,255)', 'rgb(0,255,255)', 'rgb(255,255,255)']
+use-theme-transparency=true
+foreground-color='rgb(131,148,150)'
+use-transparent-background=false
+use-theme-colors=false
+
+[/]
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '8468b899-c495-4b9b-80c7-9f6ee003eb99']
+default='8468b899-c495-4b9b-80c7-9f6ee003eb99'

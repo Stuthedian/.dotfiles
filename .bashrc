@@ -116,26 +116,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias g='gedit'
-alias mtargz='tar -xzf'
-alias mtarbz='tar -xjf'
-alias tips='(g ~/Docs/tips ~/Docs/key_combinations) &'
-#alias make_netconf='cd ~/eltex-netconf/base/me5000/fmc16 && ~/Docs/builder/builder.sh make netconf'
-export PS1='\[\e[36;1m\]\$\[\e[0m\] '
+stty -ixon # Disable flow control
+export PS1='\[\e[43m\]\[\e[30m\]\w\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] '
 cd ~/Docs
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
+export EDITOR=vim
 source /etc/profile.d/undistract-me.sh
-#emojis=(😺 😸 😹 😻 😼 😽 🙀 😿 😾)
-random_emoji()
-{
-	selected_emoji=${emojis[$RANDOM % ${#emojis[@]}]}
-	echo $selected_emoji
-}
-#export PS1='$(random_emoji) \[\e[36;1m\]\$\[\e[0m\] '
 CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB   
-set -o vi
-PROMPT_COMMAND='echo -en "\033]0;$(pwd|rev|cut -d "/" -f 1,2|rev)\a"'
+set -o vi # Vi-mode in bash
 
 function stand()
 {
