@@ -58,7 +58,7 @@ nnoremap <C-_>a :cs find a <C-R>=expand("<cword>")<CR><CR>
 let g:airline#extensions#tabline#enabled = 1
 "let g:NERDTreeWinPos = "right"
 let g:airline#extensions#tabline#buffer_nr_show = 1
-"let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 "experimental
 "window
 "nmap <leader>sw<left>  :topleft  vnew<CR>
