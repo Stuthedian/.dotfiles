@@ -118,7 +118,7 @@ fi
 
 stty -ixon # Disable flow control
 export PS1='\[\e[43m\]\[\e[30m\]\w\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] '
-cd ~/Docs
+cd ~/Docs/eltex-netconf
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
@@ -138,26 +138,38 @@ function stand()
 
 function make_me5000()
 {
-	return
+	flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
+
 	if [ -z $1 ]; then
 		echo "No target name"
+		$flash_leds
 		return
 	fi
 	if [ -z $2 ]; then
-		echo "No target for make"
-		return
+		echo "Warning: no target for make - building all"
 	fi
 	current_dir=$(pwd)
 	firmware_path=~/Docs/eltex-netconf/base/me5000/out/fmc16
 	firmware=firmware_2.3.0.$1.fmc16
 	cd ~/Docs/eltex-netconf/base/me5000/fmc16
-	~/Docs/builder/builder.sh make $2 || return
+	~/Docs/builder/builder.sh make $2
+	if [[ $? -ne 0 ]]; then
+		cd $current_dir
+		$flash_leds
+		return
+	fi
 	cd ..
-	~/Docs/builder/builder.sh make fs dist || return
+	~/Docs/builder/builder.sh make fs dist
+	if [[ $? -ne 0 ]]; then
+		cd $current_dir
+		$flash_leds
+		return
+	fi
 	mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware 
 	cp $firmware_path/$firmware /srv/tftp
 	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf' on device"
 	echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -i
+	$flash_leds
 	cd $current_dir 
 }
 
