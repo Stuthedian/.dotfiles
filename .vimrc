@@ -1,16 +1,16 @@
 set nocompatible 
-set mouse=n
-set ttymouse=xterm2
+set mouse=n ttymouse=xterm2
 set showcmd
 set hidden
 set number relativenumber
 set nowrap
-set tabstop=4
-set shiftwidth=4
+set tabstop=4 shiftwidth=4 expandtab
+set timeoutlen=1000 ttimeoutlen=10
 set tildeop
 set background=dark
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
+set cursorline
 
 filetype on
 autocmd FileType c :set cindent
