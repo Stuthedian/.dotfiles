@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 stty -ixon # Disable flow control
-export PS1="\[\e[43m\]\[\e[30m\]\w:\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
+export PS1="\[\e[43m\]\[\e[30m\]\w:\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
 cd ~/Docs/eltex-netconf
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
@@ -134,6 +134,11 @@ function stand()
 	3) ssh 192.168.192.221 -l user;;
 	*) echo "Expected apropriate stand number";;
 	esac
+}
+
+function flash_led()
+{
+    xdotool key --repeat 30 --repeat-delay 250 Num_Lock
 }
 
 function make_me5000()
@@ -186,7 +191,6 @@ function make_me5200()
 function foo()
 {
 	current_dir=$(pwd)
-	flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
 
 	if [ -z $2 ]; then
 		echo "No target name"
@@ -199,21 +203,26 @@ function foo()
 	~/Docs/builder/builder.sh make $3
 	if [[ $? -ne 0 ]]; then
 		cd $current_dir
-		$flash_leds
+		flash_led &
 		return
 	fi
 	~/Docs/builder/builder.sh make fs dist
 	if [[ $? -ne 0 ]]; then
 		cd $current_dir
-		$flash_leds
+		flash_led &
 		return
 	fi
 	mv ~/Docs/eltex-netconf/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 ~/Docs/eltex-netconf/base/$1/out/$1/firmware_2.3.0.$2.$1
 	cp ~/Docs/eltex-netconf/base/$1/out/$1/firmware_2.3.0.$2.$1 /srv/tftp
 	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf' on device"
 	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -i
-	$flash_leds
 	cd $current_dir 
+    flash_led &
+}
+
+function Dshell()
+{
+	~/Docs/builder/builder.sh shell
 }
 
 function show_branches()
