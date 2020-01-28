@@ -216,6 +216,11 @@ function foo()
 	cd $current_dir 
 }
 
+function show_branches()
+{
+    synchronize_repo git rev-parse --abbrev-ref HEAD
+}
+
 function synchronize_repo()
 {
 	for dir in * 
