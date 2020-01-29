@@ -484,3 +484,5 @@ nnoremap <f8> :delete<cr>
 " let $VIFM_SERVER_NAME = v:servername
 
 set number relativenumber
+set viewcolumns=*{name}..,16{mtime},7{}.
+set dotfiles
