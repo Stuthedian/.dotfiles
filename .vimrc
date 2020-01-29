@@ -72,6 +72,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/vifm/vifm.vim'
+Plug 'https://github.com/vim-airline/vim-airline'
 call plug#end()
 
 "Airline
