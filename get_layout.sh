@@ -2,11 +2,12 @@
 
 function get_keyboard_layout()
 {
-	case "$(xset -q|grep LED| awk '{ print $10 }')" in
-	  "00000000") echo "En" ;;
-	  "00001004") echo "Ru" ;;
-	  *) echo "unknown" ;;
-	esac
+    if [ "$(xset -q|grep LED| awk '{ print $10 }')" -lt "00001004" ]
+    then
+	 echo "En";
+    else
+	  echo "Ru";
+    fi
 }
 
 get_keyboard_layout

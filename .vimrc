@@ -1,16 +1,17 @@
-set nocompatible 
-set mouse=n
-set ttymouse=xterm2
+set nocompatible
+set mouse=n ttymouse=xterm2
 set showcmd
 set hidden
 set number relativenumber
+set ignorecase
 set nowrap
-set tabstop=4
-set shiftwidth=4
+set tabstop=4 shiftwidth=4 expandtab
+set timeoutlen=1000 ttimeoutlen=10
 set tildeop
 set background=dark
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
+set cursorline
 
 filetype on
 autocmd FileType c :set cindent
@@ -21,6 +22,8 @@ nnoremap <Space> <Nop>
 "Autocomplete braces, quotes
 inoremap( ()<Esc>i
 inoremap(( (
+inoremap[ []<Esc>i
+inoremap[[ [
 inoremap{ <Esc>o{<CR>}<Esc>O
 inoremap{{ {
 inoremap" ""<Esc>i
@@ -28,16 +31,16 @@ inoremap"" "
 inoremap' ''<Esc>i
 inoremap'' '
 
-if &term =~ 'xterm\|screen'
-  let &t_SI .= "\<Esc>[6 q" " solid underscore
-  let &t_EI .= "\<Esc>[2 q" " solid block
+"if &term =~ 'xterm\|screen'
+"  let &t_SI .= "\<Esc>[6 q" " solid underscore
+"  let &t_EI .= "\<Esc>[2 q" " solid block
   " 1 or 0 -> blinking block
   " 3 -> blinking underscore
   " 4 -> solid underscore
   " Recent versions of xterm (282 or above) also support
   " 5 -> blinking vertical bar
   " 6 -> solid vertical bar
-endif
+"endif
 "source ~/Docs/cscope_maps.vim
 
 "Window
@@ -60,10 +63,22 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <C-s> <Nop>
 
+"Vim-plug automatic installation
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/vifm/vifm.vim'
+Plug 'https://github.com/vim-airline/vim-airline'
+call plug#end()
+
 "Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-"let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 "Cscope
 nnoremap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
