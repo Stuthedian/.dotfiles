@@ -1,3 +1,4 @@
+"set clipboard=unnamedplus
 set nocompatible
 set mouse=n ttymouse=xterm2
 set showcmd
