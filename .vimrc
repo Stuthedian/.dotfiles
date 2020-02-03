@@ -30,6 +30,8 @@ inoremap" ""<Esc>i
 inoremap"" "
 inoremap' ''<Esc>i
 inoremap'' '
+inoremap< <><Esc>i
+inoremap<< <
 
 "if &term =~ 'xterm\|screen'
 "  let &t_SI .= "\<Esc>[6 q" " solid underscore
