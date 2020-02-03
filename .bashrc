@@ -117,18 +117,18 @@ if ! shopt -oq posix; then
 fi
 
 stty -ixon # Disable flow control
-export PS1="\[\e[43m\]\[\e[30m\]\w:\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
-cd ~/Docs/eltex-netconf
+export PS1="\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
+cd ~/Docs/me-group
 export LONG_RUNNING_COMMAND_TIMEOUT=10
 export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
 source /etc/profile.d/undistract-me.sh
-CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB   
+CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB
 set -o vi # Vi-mode in bash
 
 function stand()
 {
-	case $1 in 
+	case $1 in
 	1) ssh 192.168.192.201 -l user;;
 	2) ssh 192.168.192.211 -l user;;
 	3) ssh 192.168.192.221 -l user;;
@@ -141,13 +141,31 @@ function flash_led()
     xdotool key --repeat 30 --repeat-delay 250 Num_Lock
 }
 
+function upload_to_tftp()
+{
+	mv ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1
+	cp ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1 /srv/tftp
+	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf' on device"
+	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -i
+}
+
+function compile_firmware()
+{
+	~/Docs/builder/builder.sh make fs dist
+	if [[ $? -ne 0 ]]; then
+		cd $current_dir
+		flash_led &
+		return
+	fi
+}
+
 function make_me5000()
 {
-	flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
+	#flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
 
 	if [ -z $1 ]; then
 		echo "No target name"
-		$flash_leds
+		flash_led &
 		return
 	fi
 	if [ -z $2 ]; then
@@ -160,32 +178,24 @@ function make_me5000()
 	~/Docs/builder/builder.sh make $2
 	if [[ $? -ne 0 ]]; then
 		cd $current_dir
-		$flash_leds
+		flash_led &
 		return
 	fi
 	cd ..
 	~/Docs/builder/builder.sh make fs dist
 	if [[ $? -ne 0 ]]; then
 		cd $current_dir
-		$flash_leds
+		flash_led &
 		return
 	fi
 	mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware 
 	cp $firmware_path/$firmware /srv/tftp
 	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf' on device"
 	echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -i
-	$flash_leds
+    compile_firmware
+    #upload_to_tftp me5000 $2
+	flash_led &
 	cd $current_dir 
-}
-
-function make_me5100()
-{
-	foo me5100 $1 $2
-}
-
-function make_me5200()
-{
-	foo me5200 $1 $2
 }
 
 function foo()
@@ -199,24 +209,35 @@ function foo()
 	if [ -z $3 ]; then
 		echo "Warning: no target for make - building all"
 	fi
-	cd ~/Docs/eltex-netconf/base/$1
+	cd ~/Docs/me-group/base/$1
 	~/Docs/builder/builder.sh make $3
 	if [[ $? -ne 0 ]]; then
 		cd $current_dir
 		flash_led &
 		return
 	fi
-	~/Docs/builder/builder.sh make fs dist
-	if [[ $? -ne 0 ]]; then
-		cd $current_dir
-		flash_led &
-		return
-	fi
-	mv ~/Docs/eltex-netconf/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 ~/Docs/eltex-netconf/base/$1/out/$1/firmware_2.3.0.$2.$1
-	cp ~/Docs/eltex-netconf/base/$1/out/$1/firmware_2.3.0.$2.$1 /srv/tftp
-	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf' on device"
-	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -i
-	cd $current_dir 
+    compile_firmware
+    upload_to_tftp $1 $2
+	cd $current_dir
+    flash_led &
+}
+
+function make_me5100()
+{
+	foo me5100 $1 $2
+}
+
+function make_me5200()
+{
+	foo me5200 $1 $2
+}
+
+function make_sim()
+{
+	current_dir=$(pwd)
+	cd ~/Docs/me-group/base/sim
+	~/Docs/builder/builder.sh "$@"
+	cd $current_dir
     flash_led &
 }
 
@@ -232,7 +253,7 @@ function show_branches()
 
 function synchronize_repo()
 {
-	for dir in * 
+	for dir in *
 	do
 		if ! [ -d $dir ]; then
 			continue
@@ -243,3 +264,5 @@ function synchronize_repo()
 		cd ..
 	done
 }
+
+#unset -f foo
