@@ -1,6 +1,7 @@
 set nocompatible
 set mouse=n ttymouse=xterm2
 set showcmd
+set clipboard+=unnamedplus
 set hidden
 set number relativenumber
 set ignorecase
