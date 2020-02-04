@@ -172,9 +172,9 @@ function make_me5000()
 		echo "Warning: no target for make - building all"
 	fi
 	current_dir=$(pwd)
-	firmware_path=~/Docs/eltex-netconf/base/me5000/out/fmc16
+	firmware_path=~/Docs/me-group/base/me5000/out/fmc16
 	firmware=firmware_2.3.0.$1.fmc16
-	cd ~/Docs/eltex-netconf/base/me5000/fmc16
+	cd ~/Docs/me-group/base/me5000/fmc16
 	~/Docs/builder/builder.sh make $2
 	if [[ $? -ne 0 ]]; then
 		cd $current_dir
