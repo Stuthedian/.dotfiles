@@ -73,9 +73,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+"Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'https://github.com/vifm/vifm.vim'
-Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'vifm/vifm.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'moll/vim-bbye'
 call plug#end()
 
 "Airline
