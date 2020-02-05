@@ -78,6 +78,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vifm/vifm.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'moll/vim-bbye'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 call plug#end()
 
 "Airline
