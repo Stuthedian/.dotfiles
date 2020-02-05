@@ -85,7 +85,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -126,7 +126,18 @@ source /etc/profile.d/undistract-me.sh
 CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB
 set -o vi # Vi-mode in bash
 
-function stand()
+vicd()
+{
+
+    local dst="$(command vifm --choose-dir - "$@")"
+    if [ -z "$dst" ]; then
+        echo 'Directory picking cancelled/failed'
+        return 1
+    fi
+    cd "$dst"
+}
+
+stand()
 {
 	case $1 in
 	1) ssh 192.168.192.201 -l user;;
@@ -136,12 +147,12 @@ function stand()
 	esac
 }
 
-function flash_led()
+flash_led()
 {
-    xdotool key --repeat 30 --repeat-delay 250 Num_Lock
+    xdotool key --repeat 30 --repeat-delay 250 Num_Lock; alert
 }
 
-function upload_to_tftp()
+upload_to_tftp()
 {
 	mv ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1
 	cp ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1 /srv/tftp
@@ -149,7 +160,7 @@ function upload_to_tftp()
 	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -i
 }
 
-function compile_firmware()
+compile_firmware()
 {
 	~/Docs/builder/builder.sh make fs dist
 	if [[ $? -ne 0 ]]; then
@@ -159,7 +170,7 @@ function compile_firmware()
 	fi
 }
 
-function make_me5000()
+make_me5000()
 {
 	#flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
 
@@ -198,7 +209,7 @@ function make_me5000()
 	cd $current_dir 
 }
 
-function foo()
+foo()
 {
 	current_dir=$(pwd)
 
@@ -222,17 +233,17 @@ function foo()
     flash_led &
 }
 
-function make_me5100()
+make_me5100()
 {
 	foo me5100 $1 $2
 }
 
-function make_me5200()
+make_me5200()
 {
 	foo me5200 $1 $2
 }
 
-function make_sim()
+make_sim()
 {
 	current_dir=$(pwd)
 	cd ~/Docs/me-group/base/sim
@@ -241,17 +252,17 @@ function make_sim()
     flash_led &
 }
 
-function Dshell()
+Dshell()
 {
 	~/Docs/builder/builder.sh shell
 }
 
-function show_branches()
+show_branches()
 {
     synchronize_repo git rev-parse --abbrev-ref HEAD
 }
 
-function synchronize_repo()
+synchronize_repo()
 {
 	for dir in *
 	do
