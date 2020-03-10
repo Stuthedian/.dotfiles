@@ -119,11 +119,11 @@ fi
 stty -ixon # Disable flow control
 export PS1="\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
 cd ~/Docs/me-group
-export LONG_RUNNING_COMMAND_TIMEOUT=10
-export IGNORE_WINDOW_CHECK=1
+#export LONG_RUNNING_COMMAND_TIMEOUT=10
+#export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
-source /etc/profile.d/undistract-me.sh
-CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB
+#source /etc/profile.d/undistract-me.sh
+#CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB
 set -o vi # Vi-mode in bash
 
 vicd()
@@ -149,7 +149,8 @@ stand()
 
 flash_led()
 {
-    xdotool key --repeat 30 --repeat-delay 250 Num_Lock; alert
+    #xdotool key --repeat 30 --repeat-delay 250 Num_Lock;
+    alert
 }
 
 upload_to_tftp()
@@ -157,7 +158,7 @@ upload_to_tftp()
 	mv ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1
 	cp ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1 /srv/tftp
 	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf' on device"
-	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -i
+	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
 }
 
 compile_firmware()
@@ -193,20 +194,14 @@ make_me5000()
 		return
 	fi
 	cd ..
-	~/Docs/builder/builder.sh make fs dist
-	if [[ $? -ne 0 ]]; then
-		cd $current_dir
-		flash_led &
-		return
-	fi
-	mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware 
+    compile_firmware
+	mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware
 	cp $firmware_path/$firmware /srv/tftp
 	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf' on device"
-	echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -i
-    compile_firmware
+	echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
     #upload_to_tftp me5000 $2
+	cd $current_dir
 	flash_led &
-	cd $current_dir 
 }
 
 foo()
