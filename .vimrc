@@ -1,3 +1,4 @@
+"set clipboard=unnamedplus
 set nocompatible
 set mouse=n ttymouse=xterm2
 set showcmd
@@ -9,10 +10,15 @@ set nowrap
 set tabstop=4 shiftwidth=4 expandtab
 set timeoutlen=1000 ttimeoutlen=10
 set tildeop
-set background=dark
+"set background=dark
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
 set cursorline
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
 filetype on
 autocmd FileType c :set cindent
