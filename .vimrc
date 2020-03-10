@@ -1,7 +1,7 @@
 set nocompatible
 set mouse=n ttymouse=xterm2
 set showcmd
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 set hidden
 set number relativenumber
 set ignorecase
@@ -47,16 +47,16 @@ inoremap<< <
 "source ~/Docs/cscope_maps.vim
 
 "Window
-nnoremap <Leader>wh :topleft  vnew<CR>
-nnoremap <Leader>wl :botright vnew<CR>
-nnoremap <Leader>wk :topleft  new<CR>
-nnoremap <Leader>wj :botright new<CR>
+nnoremap <Leader>wh :topleft  vsp<CR>
+nnoremap <Leader>wl :botright vsp<CR>
+nnoremap <Leader>wk :topleft  sp<CR>
+nnoremap <Leader>wj :botright sp<CR>
 
 "Buffer
-nnoremap <Leader>bh  :leftabove  vnew<CR>
-nnoremap <Leader>bl  :rightbelow vnew<CR>
-nnoremap <Leader>bk  :leftabove  new<CR>
-nnoremap <Leader>bj  :rightbelow new<CR>
+nnoremap <Leader>bh  :leftabove  vsp<CR>
+nnoremap <Leader>bl  :rightbelow vsp<CR>
+nnoremap <Leader>bk  :leftabove  sp<CR>
+nnoremap <Leader>bj  :rightbelow sp<CR>
 
 "Window navigation
 nnoremap <C-h> <C-w>h
@@ -65,6 +65,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 nnoremap <C-s> <Nop>
+nnoremap <C-q> <Nop>
 
 "Vim-plug automatic installation
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -79,6 +80,7 @@ Plug 'vifm/vifm.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'moll/vim-bbye'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 "Airline
