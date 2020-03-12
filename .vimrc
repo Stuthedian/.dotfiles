@@ -24,6 +24,8 @@ autocmd FileType c :set cindent
 
 let mapleader = "\<F2>"
 nnoremap <Space> <Nop>
+nnoremap <Leader>p "0p
+nnoremap <Leader>P "0P
 
 "Autocomplete braces, quotes
 inoremap( ()<Esc>i
