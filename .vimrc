@@ -10,7 +10,6 @@ set nowrap
 set tabstop=4 shiftwidth=4 expandtab
 set timeoutlen=1000 ttimeoutlen=10
 set tildeop
-"set background=dark
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
 set cursorline
@@ -87,7 +86,12 @@ Plug 'vim-airline/vim-airline'
 Plug 'moll/vim-bbye'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'sainnhe/gruvbox-material'
 call plug#end()
+
+set background=dark
+let g:gruvbox_material_background = 'hard'
+colorscheme gruvbox-material
 
 "Airline
 let g:airline#extensions#tabline#enabled = 1
