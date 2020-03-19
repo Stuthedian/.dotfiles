@@ -27,6 +27,10 @@ nnoremap <Space> <Nop>
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
 
+nnoremap <Esc>k :resize +1<CR>
+nnoremap <Esc>j :resize -1<CR>
+nnoremap <Esc>h :vertical resize +1<CR>
+nnoremap <Esc>l :vertical resize -1<CR>
 "Autocomplete braces, quotes
 inoremap( ()<Esc>i
 inoremap(( (
