@@ -19,6 +19,9 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
+command Bd Bdelete
+"set makeprg=bake
+
 filetype on
 autocmd FileType c :set cindent
 
