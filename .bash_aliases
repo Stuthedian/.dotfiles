@@ -13,5 +13,4 @@ alias gco='git checkout'
 alias gci='git commit -m'
 alias gbr='git branch'
 alias gad='git add'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME \
-        -c user.name=Stuthedian -c user.email=talybov.asif@yandex.ru'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
