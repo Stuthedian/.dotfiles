@@ -273,7 +273,7 @@ synchronize_repo()
 }
 
 #unset -f foo
-function bake()
+bake()
 {
     DEVICE=$(cat ~/.device)
     TARGET=$(cat ~/.target)
@@ -281,13 +281,22 @@ function bake()
         echo "No target device, aborting"
         return
     fi
-	if [ -z $TARGET ]; then
-		echo "Warning: no target for make - building all"
-	fi
-	case $DEVICE in
-	me5000) make_me5000 dummy $TARGET;;
-	me5100) make_me5100 dummy $TARGET;;
-	me5200) make_me5200 dummy $TARGET;;
-	*) echo "Invalid device name";;
-	esac
+    if [ -z $TARGET ]; then
+        echo "Warning: no target for make - building all"
+    fi
+    tmux rename-window "$DEVICE $TARGET"
+    case $DEVICE in
+        me5000) make_me5000 dummy $TARGET;;
+        me5100) make_me5100 dummy $TARGET;;
+        me5200) make_me5200 dummy $TARGET;;
+        *) tmux rename-window "bash"
+           echo "Invalid device name";;
+    esac
+}
+
+bake_env()
+{
+    DEVICE=$(cat ~/.device)
+    TARGET=$(cat ~/.target)
+    echo "Device: $DEVICE   Target: $TARGET"
 }
