@@ -22,7 +22,7 @@ endif
 filetype on
 autocmd FileType c :set cindent
 
-let mapleader = "\<F2>"
+let mapleader = "\<Space>"
 nnoremap <Space> <Nop>
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
