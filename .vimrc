@@ -26,6 +26,7 @@ let mapleader = "\<Space>"
 nnoremap <Space> <Nop>
 nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
+nnoremap <Leader>v :Vifm<CR>
 
 nnoremap <Esc>k :resize +1<CR>
 nnoremap <Esc>j :resize -1<CR>
