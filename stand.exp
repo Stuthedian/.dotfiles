@@ -1,0 +1,19 @@
+#! /usr/bin/expect -f
+set stand [lindex $argv 0];
+if { $stand == 1 } {
+    spawn ssh 192.168.192.201 -l user
+    expect "user"
+    send "password\n"
+} else {
+    if { $stand == 2 } {
+        spawn ssh 192.168.192.211 -l user
+    } elseif { $stand == 3 } {
+        spawn ssh 192.168.192.221 -l user
+    } else {
+        puts "Expected apropriate stand number";
+        return
+    }
+    expect "user"
+    send "user\n"
+}
+interact
