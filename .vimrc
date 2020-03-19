@@ -105,12 +105,14 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 "Cscope
+source /usr/local/share/gtags/gtags.vim
+source /usr/local/share/gtags/gtags-cscope.vim
+set csprg=gtags-cscope
+silent! cs add /home/default/Docs/eltex-netconf/GTAGS
+
+"Find this C symbol
 nnoremap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+"Find this definition
 nnoremap <Leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+"Find functions calling this function
 nnoremap <Leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nnoremap <Leader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nnoremap <Leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-nnoremap <Leader>a :cs find a <C-R>=expand("<cword>")<CR><CR>
