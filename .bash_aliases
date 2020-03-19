@@ -15,3 +15,12 @@ alias gci='git commit -m'
 alias gbr='git branch'
 alias gad='git add'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+#Git dotfiles
+alias dst='dotfiles status'
+alias ddf='dotfiles diff'
+alias dh='dotfiles log  --author="Stuthedian" --author="Асиф Талыбов" --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+alias dco='dotfiles checkout'
+alias dci='dotfiles commit -m'
+alias dbr='dotfiles branch'
+alias dad='dotfiles add'
