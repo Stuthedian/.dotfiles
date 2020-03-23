@@ -118,7 +118,9 @@ fi
 
 stty -ixon # Disable flow control
 export PS1="\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
-cd ~/Docs/me-group
+if [ "$PWD" = "/home/default" ]; then
+    cd ~/Docs/me-group
+fi
 #export LONG_RUNNING_COMMAND_TIMEOUT=10
 #export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
