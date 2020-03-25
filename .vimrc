@@ -31,6 +31,11 @@ nnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
 nnoremap <Leader>v :Vifm<CR>
 
+noremap Y y$
+
+nnoremap \ I//<Esc>
+vnoremap \ <Esc>'<I/*<Esc>'>A*/<Esc>
+
 nnoremap <Esc>k :resize +1<CR>
 nnoremap <Esc>j :resize -1<CR>
 nnoremap <Esc>h :vertical resize +1<CR>
