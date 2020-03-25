@@ -197,12 +197,14 @@ make_me5000()
 		return
 	fi
 	cd ..
-    compile_firmware
-	mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware
-	cp $firmware_path/$firmware /srv/tftp
-	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf' on device"
-	echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
-    #upload_to_tftp me5000 $2
+	if [ "$4" = "firmware" ]; then
+        compile_firmware
+        mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware
+        cp $firmware_path/$firmware /srv/tftp
+        echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf' on device"
+        echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
+        #upload_to_tftp me5000 $2
+	fi
 	cd $current_dir
 	flash_led &
 }
@@ -225,20 +227,22 @@ foo()
 		flash_led &
 		return
 	fi
-    compile_firmware
-    upload_to_tftp $1 $2
+	if [ "$4" = "firmware" ]; then
+        compile_firmware
+        upload_to_tftp $1 $2
+	fi
 	cd $current_dir
     flash_led &
 }
 
 make_me5100()
 {
-	foo me5100 $1 $2
+	foo me5100 $1 $2 $3
 }
 
 make_me5200()
 {
-	foo me5200 $1 $2
+	foo me5200 $1 $2 $3
 }
 
 make_sim()
@@ -279,6 +283,8 @@ bake()
 {
     DEVICE=$(cat ~/.device)
     TARGET=$(cat ~/.target)
+    BEHAVIOUR=$(cat ~/.behaviour)
+
     if [ -z $DEVICE ]; then
         echo "No target device, aborting"
         return
@@ -286,19 +292,32 @@ bake()
     if [ -z $TARGET ]; then
         echo "Warning: no target for make - building all"
     fi
-    tmux rename-window "$DEVICE $TARGET"
+    if [ "$1" = "-b" ]; then
+        BEHAVIOUR="build"
+    elif [ "$1" = "-f" ]; then
+        BEHAVIOUR="firmware"
+    fi
+    if [ $BEHAVIOUR != "build" ] && [ $BEHAVIOUR != "firmware" ]; then
+        echo "Unrecognized behaviour: $BEHAVIOUR"
+        return
+    fi
+
+    tmux rename-window "🔨$DEVICE $TARGET $BEHAVIOUR🔨"
+
     case $DEVICE in
-        me5000) make_me5000 dummy $TARGET;;
-        me5100) make_me5100 dummy $TARGET;;
-        me5200) make_me5200 dummy $TARGET;;
+        me5000) make_me5000 dummy $TARGET $BEHAVIOUR;;
+        me5100) make_me5100 dummy $TARGET $BEHAVIOUR;;
+        me5200) make_me5200 dummy $TARGET $BEHAVIOUR;;
         *) tmux rename-window "bash"
            echo "Invalid device name";;
     esac
+    tmux rename-window "bash"
 }
 
 bake_env()
 {
     DEVICE=$(cat ~/.device)
     TARGET=$(cat ~/.target)
-    echo "Device: $DEVICE   Target: $TARGET"
+    BEHAVIOUR=$(cat ~/.behaviour)
+    echo "Device: $DEVICE   Target: $TARGET    Behaviour: $BEHAVIOUR"
 }
