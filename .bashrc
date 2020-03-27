@@ -121,10 +121,6 @@ export PS1="\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[
 if [ "$PWD" = "/home/default" ]; then
     cd ~/Docs/me-group
 fi
-#export LONG_RUNNING_COMMAND_TIMEOUT=10
-#export IGNORE_WINDOW_CHECK=1
 export EDITOR=vim
-#source /etc/profile.d/undistract-me.sh
-#CSCOPE_DB=/home/default/Docs/eltex-netconf/cscope.out; export CSCOPE_DB
 set -o vi # Vi-mode in bash
 . ~/.bash_functions
