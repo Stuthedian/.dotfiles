@@ -1,6 +1,7 @@
 "set clipboard=unnamedplus
 set nocompatible
 set mouse=n ttymouse=xterm2
+set gdefault
 set showcmd
 set clipboard=unnamedplus
 set hidden
