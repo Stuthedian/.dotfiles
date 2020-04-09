@@ -3,10 +3,10 @@
 # for examples
 
 # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+#case $- in
+    #*i*) ;;
+      #*) return;;
+#esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -116,11 +116,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
-stty -ixon # Disable flow control
-export PS1="\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
+export PS1="\[\e[104m\]$SHLVL\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
 if [ "$PWD" = "/home/default" ]; then
     cd ~/Docs/me-group
 fi
 export EDITOR=vim
 set -o vi # Vi-mode in bash
 . ~/.bash_functions
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+stty -ixon # Disable flow control
