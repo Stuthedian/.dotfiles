@@ -191,3 +191,17 @@ bake_env()
     BEHAVIOUR=$(cat ~/.behaviour)
     echo "Device: $DEVICE   Target: $TARGET    Behaviour: $BEHAVIOUR"
 }
+
+statall()
+{
+    for dir in ~/Docs/me-group/*
+    do
+        if ! [ -d $dir ]; then
+            continue
+        fi
+        cd "$dir"
+        echo -e "\e[43m\e[30m$dir\e[0m"
+        git status -sb | head -1
+        cd ..
+    done
+}
