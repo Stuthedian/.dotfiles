@@ -6,6 +6,7 @@ set clipboard=unnamedplus
 set hidden
 set number relativenumber
 set ignorecase
+set foldmethod=syntax foldnestmax=1
 set nowrap
 set tabstop=4 shiftwidth=4 expandtab
 set timeoutlen=1000 ttimeoutlen=10
