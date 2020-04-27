@@ -7,8 +7,9 @@ set clipboard=unnamedplus
 set hidden
 set number relativenumber
 set ignorecase
+set foldmethod=syntax foldnestmax=1
 set nowrap
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=2 shiftwidth=2 expandtab
 set timeoutlen=1000 ttimeoutlen=10
 set tildeop
 set colorcolumn=80
@@ -22,6 +23,16 @@ endif
 
 command Bd Bdelete
 "set makeprg=bake
+
+function AstyleIndent()
+  if !filereadable(".astylerc") || !executable("astyle")
+    return
+  endif
+  silent !astyle -q --options=.astylerc %
+  silent edit
+endfunction
+
+autocmd BufWritePost *.c,*.h :silent call AstyleIndent()
 
 filetype on
 autocmd FileType c :set cindent
