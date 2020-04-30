@@ -6,7 +6,7 @@ set showcmd
 set clipboard=unnamedplus
 set hidden
 set number relativenumber
-set ignorecase
+set smartcase
 set foldmethod=syntax foldnestmax=1
 set nowrap
 set tabstop=2 shiftwidth=2 expandtab
