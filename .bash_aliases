@@ -10,6 +10,7 @@ alias gstt='git status --untracked-files=no'
 alias gdf='git diff'
 alias gh='git log --perl-regexp --author="Асиф Талыбов|Stuthedian"\
   --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+alias gha='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 alias gco='git checkout'
 alias gci='git commit -m'
 alias gbr='git branch'
