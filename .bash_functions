@@ -13,12 +13,6 @@ stand()
 {
     ~/stand.exp $1 $2
     tmux rename-window "stand"
-	#case $1 in
-	#1) ssh 192.168.192.201 -l user;;
-	#2) ssh 192.168.192.211 -l user;;
-	#3) ssh 192.168.192.221 -l user;;
-	#*) echo "Expected apropriate stand number";;
-	#esac
 }
 
 flash_led()
