@@ -23,105 +23,104 @@ flash_led()
 
 upload_to_tftp()
 {
-	mv ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1
-	cp ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.$2.$1 /srv/tftp
-	echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf' on device"
-	echo "copy tftp://192.168.192.13/firmware_2.3.0.$2.$1 fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
+  cp ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 /srv/tftp
+  echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.$1 fs://firmware vrf mgmt-intf' on device"
+  echo "copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.$1 fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
 }
 
 compile_firmware()
 {
-	~/Docs/builder/builder.sh make fs dist
-	if [[ $? -ne 0 ]]; then
-		cd $current_dir
-		flash_led &
-		return
-	fi
+  ~/Docs/builder/builder.sh make fs dist
+  if [[ $? -ne 0 ]]; then
+    cd $current_dir
+    flash_led &
+    return
+  fi
 }
 
 make_me5000()
 {
-	#flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
+  #flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
 
-	if [ -z $1 ]; then
-		echo "No target name"
-		flash_led &
-		return
-	fi
-	if [ -z $2 ]; then
-		echo "Warning: no target for make - building all"
-	fi
-	current_dir=$(pwd)
-	firmware_path=~/Docs/me-group/base/me5000/out/fmc16
-	firmware=firmware_2.3.0.$1.fmc16
-	cd ~/Docs/me-group/base/me5000/fmc16
-	~/Docs/builder/builder.sh make $2
-	if [[ $? -ne 0 ]]; then
-		cd $current_dir
-		flash_led &
-		return
-	fi
-	cd ..
-	if [ "$4" = "firmware" ]; then
+  if [ -z $1 ]; then
+    echo "No target name"
+    flash_led &
+    return
+  fi
+  if [ -z $2 ]; then
+    echo "Warning: no target for make - building all"
+  fi
+  current_dir=$(pwd)
+  firmware_path=~/Docs/me-group/base/me5000/out/fmc16
+  firmware=firmware_2.3.0.$1.fmc16
+  cd ~/Docs/me-group/base/me5000/fmc16
+  ~/Docs/builder/builder.sh make $2
+  if [[ $? -ne 0 ]]; then
+    cd $current_dir
+    flash_led &
+    return
+  fi
+  cd ..
+  if [ "$4" = "firmware" ]; then
         compile_firmware
         mv $firmware_path/firmware_2.3.0.DEVEL-BUILD.fmc16 $firmware_path/$firmware
         cp $firmware_path/$firmware /srv/tftp
         echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf' on device"
         echo "copy tftp://192.168.192.13/$firmware fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
         #upload_to_tftp me5000 $2
-	fi
-	cd $current_dir
-	flash_led &
+  fi
+  cd $current_dir
+  flash_led &
 }
 
 foo()
 {
-	current_dir=$(pwd)
+  current_dir=$(pwd)
+  DEVICE=$1
+  TARGET=$2
+  MAKE_ACTION=$3
+  BEHAVIOUR=$4
 
-	if [ -z $2 ]; then
-		echo "No target name"
-		return
-	fi
-	if [ -z $3 ]; then
-		echo "Warning: no target for make - building all"
-	fi
-	cd ~/Docs/me-group/base/$1
-	~/Docs/builder/builder.sh make $3
-	if [[ $? -ne 0 ]]; then
-		cd $current_dir
-		flash_led &
-		return
-	fi
-	if [ "$4" = "firmware" ]; then
-        compile_firmware
-        upload_to_tftp $1 $2
-	fi
-	cd $current_dir
-    flash_led &
+  if [ -z $TARGET ]; then
+    echo "Warning: no target for make - building all"
+  fi
+  cd ~/Docs/me-group/base/$DEVICE
+  ~/Docs/builder/builder.sh make $TARGET MAKE_ACTION=$MAKE_ACTION
+  if [[ $? -ne 0 ]]; then
+    cd $current_dir
+    alert &
+    return
+  fi
+  if [ "$BEHAVIOUR" = "f" ] || [ "$BEHAVIOUR" = "bf" ]; then
+    compile_firmware
+    upload_to_tftp $1
+  fi
+  cd $current_dir
+  alert &
 }
 
 make_me5100()
 {
-	foo me5100 $1 $2 $3
+  foo me5100 $1 $2 $3
 }
 
 make_me5200()
 {
-	foo me5200 $1 $2 $3
+  foo me5200 $1 $2 $3
 }
 
 make_sim()
 {
-	current_dir=$(pwd)
-	cd ~/Docs/me-group/base/sim
-	~/Docs/builder/builder.sh "$@"
-	cd $current_dir
+  current_dir=$(pwd)
+  cd ~/Docs/me-group/base/sim
+  ~/Docs/builder/builder.sh "$@"
+  cd $current_dir
     flash_led &
 }
 
 Dshell()
 {
-	~/Docs/builder/builder.sh shell
+  ~/Docs/builder/builder.sh shell
 }
 
 show_branches()
@@ -131,16 +130,17 @@ show_branches()
 
 synchronize_repo()
 {
-	for dir in *
-	do
-		if ! [ -d $dir ]; then
-			continue
-		fi
-		cd "$dir"
-		echo -e "\e[43m\e[30m$dir\e[0m"
-		"$@"
-		cd ..
-	done
+  for dir in *
+  do
+    if ! [ -d $dir ]; then
+      continue
+    fi
+    cd "$dir"
+    echo -e "\e[43m\e[30m$dir\e[0m"
+echo '$@'
+    #$@
+    cd ..
+  done
 }
 
 bake()
