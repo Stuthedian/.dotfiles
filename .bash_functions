@@ -15,17 +15,18 @@ stand()
     tmux rename-window "stand"
 }
 
-flash_led()
-{
-    #xdotool key --repeat 30 --repeat-delay 250 Num_Lock;
-    alert
-}
-
 upload_to_tftp()
 {
-  cp ~/Docs/me-group/base/$1/out/$1/firmware_2.3.0.DEVEL-BUILD.$1 /srv/tftp
-  echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.$1 fs://firmware vrf mgmt-intf' on device"
-  echo "copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.$1 fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
+  DEVICE=$1
+  if [ "$DEVICE" = "me5100" ] || [ "$DEVICE" = "me5200" ]; then
+    cp ~/Docs/me-group/base/$DEVICE/out/$DEVICE/firmware_2.3.0.DEVEL-BUILD.$DEVICE /srv/tftp
+    echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.$DEVICE fs://firmware vrf mgmt-intf' on device"
+    echo "copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.$DEVICE fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
+  else
+    cp ~/Docs/me-group/base/$DEVICE/out/fmc16/firmware_2.3.0.DEVEL-BUILD.fmc16 /srv/tftp
+    echo "Firmware uploaded to tftp. Enter 'copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.fmc16 fs://firmware vrf mgmt-intf' on device"
+    echo "copy tftp://192.168.192.13/firmware_2.3.0.DEVEL-BUILD.fmc16 fs://firmware vrf mgmt-intf" | xclip -in -selection clipboard
+  fi
 }
 
 compile_firmware()
@@ -33,18 +34,18 @@ compile_firmware()
   ~/Docs/builder/builder.sh make fs dist
   if [[ $? -ne 0 ]]; then
     cd $current_dir
-    flash_led &
+    alert &
     return
   fi
 }
 
 make_me5000()
 {
-  #flash_leds="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
+  #alerts="xdotool key --repeat 30 --repeat-delay 250 Num_Lock"
 
   if [ -z $1 ]; then
     echo "No target name"
-    flash_led &
+    alert &
     return
   fi
   if [ -z $2 ]; then
@@ -57,7 +58,7 @@ make_me5000()
   ~/Docs/builder/builder.sh make $2
   if [[ $? -ne 0 ]]; then
     cd $current_dir
-    flash_led &
+    alert &
     return
   fi
   cd ..
@@ -70,7 +71,7 @@ make_me5000()
         #upload_to_tftp me5000 $2
   fi
   cd $current_dir
-  flash_led &
+  alert &
 }
 
 foo()
@@ -115,7 +116,7 @@ make_sim()
   cd ~/Docs/me-group/base/sim
   ~/Docs/builder/builder.sh "$@"
   cd $current_dir
-    flash_led &
+  alert &
 }
 
 Dshell()
@@ -137,8 +138,7 @@ synchronize_repo()
     fi
     cd "$dir"
     echo -e "\e[43m\e[30m$dir\e[0m"
-echo '$@'
-    #$@
+    "$@"
     cd ..
   done
 }
