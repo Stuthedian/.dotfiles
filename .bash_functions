@@ -82,9 +82,6 @@ foo()
   MAKE_ACTION=$3
   BEHAVIOUR=$4
 
-  if [ -z $TARGET ]; then
-    echo "Warning: no target for make - building all"
-  fi
   cd ~/Docs/me-group/base/$DEVICE
   ~/Docs/builder/builder.sh make $TARGET MAKE_ACTION=$MAKE_ACTION
   if [[ $? -ne 0 ]]; then
@@ -145,45 +142,32 @@ synchronize_repo()
 
 bake()
 {
-    DEVICE=$(cat ~/.device)
-    TARGET=$(cat ~/.target)
-    BEHAVIOUR=$(cat ~/.behaviour)
+  DEVICE=$(cat ~/.device)
+  TARGET=$(cat ~/.target)
+  MAKE_ACTION=$(cat ~/.make_action)
+  BEHAVIOUR=$(cat ~/.behaviour)
 
-    if [ -z $DEVICE ]; then
-        echo "No target device, aborting"
-        return
-    fi
-    if [ -z $TARGET ]; then
-        echo "Warning: no target for make - building all"
-    fi
-    if [ "$1" = "-b" ]; then
-        BEHAVIOUR="build"
-    elif [ "$1" = "-f" ]; then
-        BEHAVIOUR="firmware"
-    fi
-    if [ $BEHAVIOUR != "build" ] && [ $BEHAVIOUR != "firmware" ]; then
-        echo "Unrecognized behaviour: $BEHAVIOUR"
-        return
-    fi
+  if [ -z $DEVICE ]; then
+    echo "No target device, aborting"
+    return
+  fi
+  if [ -z $TARGET ]; then
+    echo "Warning: no target for make - building all"
+  fi
 
-    tmux rename-window "🔨$DEVICE $TARGET $BEHAVIOUR🔨"
+  tmux rename-window "🔨$DEVICE $TARGET $MAKE_ACTION $BEHAVIOUR🔨"
 
-    case $DEVICE in
-        me5000) make_me5000 dummy $TARGET $BEHAVIOUR;;
-        me5100) make_me5100 dummy $TARGET $BEHAVIOUR;;
-        me5200) make_me5200 dummy $TARGET $BEHAVIOUR;;
-        *) tmux rename-window "bash"
-           echo "Invalid device name";;
-    esac
-    tmux rename-window "bash"
+  foo $DEVICE $TARGET $MAKE_ACTION $BEHAVIOUR
+  tmux rename-window "bash"
 }
 
 bake_env()
 {
-    DEVICE=$(cat ~/.device)
-    TARGET=$(cat ~/.target)
-    BEHAVIOUR=$(cat ~/.behaviour)
-    echo "Device: $DEVICE   Target: $TARGET    Behaviour: $BEHAVIOUR"
+  DEVICE=$(cat ~/.device)
+  TARGET=$(cat ~/.target)
+  MAKE_ACTION=$(cat ~/.make_action)
+  BEHAVIOUR=$(cat ~/.behaviour)
+  echo "Device: $DEVICE   Target: $TARGET    Make action: $MAKE_ACTION  Behaviour: $BEHAVIOUR"
 }
 
 statall()
