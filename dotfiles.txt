@@ -1,0 +1,24 @@
+Taken from: https://www.anand-iyer.com/blog/2018/a-simpler-way-to-manage-your-dotfiles.htm://www.anand-iyer.com/blog/2018/a-simpler-way-to-manage-your-dotfiles.html
+
+First Time Setup
+
+mkdir $HOME/.dotfiles
+git init --bare $HOME/.dotfiles
+
+alias dotfiles='/usr/local/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+dotfiles config --local status.showUntrackedFiles no
+dotfiles remote add origin git@github.com:anandpiyer/.dotfiles.git
+
+cd $HOME
+dotfiles add .tmux.conf
+dotfiles commit -m "Add .tmux.conf"
+dotfiles push
+
+Setting Up a New Machine
+
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/anandpiyer/.dotfiles.git ~
+
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/anandpiyer/.dotfiles.git tmpdotfiles
+rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
+rm -r tmpdotfiles
