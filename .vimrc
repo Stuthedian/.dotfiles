@@ -127,7 +127,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 source /usr/local/share/gtags/gtags.vim
 source /usr/local/share/gtags/gtags-cscope.vim
 set csprg=gtags-cscope
-silent! cs add /home/default/Docs/eltex-netconf/GTAGS
+silent! cs add /home/default/Docs/me-group-2.4.0/GTAGS
 
 "Find this C symbol
 nnoremap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>

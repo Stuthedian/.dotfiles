@@ -118,7 +118,7 @@ make_sim()
 
 Dshell()
 {
-  ~/Docs/builder/builder.sh shell
+  ~/Docs/builder-2.4.0/builder.sh shell
 }
 
 show_branches()
@@ -172,7 +172,7 @@ bake_env()
 
 statall()
 {
-    for dir in ~/Docs/me-group/*
+    for dir in ~/Docs/me-group-2.4.0/*
     do
         if ! [ -d $dir ]; then
             continue
