@@ -1,7 +1,7 @@
 alias g='gedit'
 alias mtargz='tar -xzf'
 alias mtarbz='tar -xjf'
-alias tips='(gvim ~/Docs/tips ~/Docs/key_combinations) &'
+alias tips='vim ~/Docs/tips ~/Docs/key_combinations ~/Docs/todo'
 alias :q='exit'
 
 #Git
