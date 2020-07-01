@@ -23,6 +23,12 @@ endif
 
 command Bd Bdelete
 "set makeprg=bake
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=-1
+set imcmdline
+inoremap <C-j> <C-^>
+cnoremap <C-j> <C-^>
 
 function AstyleIndent()
   if !filereadable(".astylerc") || !executable("astyle")
