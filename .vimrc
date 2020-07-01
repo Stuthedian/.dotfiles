@@ -1,4 +1,3 @@
-"set clipboard=unnamedplus
 set nocompatible
 set mouse=n ttymouse=xterm2
 set gdefault
@@ -21,8 +20,12 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-command Bd Bdelete
-"set makeprg=bake
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=-1
+set imcmdline
+inoremap <C-j> <C-^>
+cnoremap <C-j> <C-^>
 
 function AstyleIndent()
   if !filereadable(".astylerc") || !executable("astyle")
@@ -64,17 +67,6 @@ inoremap"" "
 inoremap' ''<Esc>i
 inoremap'' '
 
-"if &term =~ 'xterm\|screen'
-"  let &t_SI .= "\<Esc>[6 q" " solid underscore
-"  let &t_EI .= "\<Esc>[2 q" " solid block
-  " 1 or 0 -> blinking block
-  " 3 -> blinking underscore
-  " 4 -> solid underscore
-  " Recent versions of xterm (282 or above) also support
-  " 5 -> blinking vertical bar
-  " 6 -> solid vertical bar
-"endif
-"source ~/Docs/cscope_maps.vim
 
 "Window
 nnoremap <Leader>wh :topleft  vsp<CR>
