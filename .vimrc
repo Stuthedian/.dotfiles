@@ -3,6 +3,7 @@ set mouse=n ttymouse=xterm2
 set gdefault
 set showcmd
 set clipboard=unnamedplus
+set splitbelow splitright
 set hidden
 set number relativenumber
 set ignorecase smartcase
