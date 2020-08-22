@@ -61,7 +61,7 @@ inoremap( ()<Esc>i
 inoremap(( (
 inoremap[ []<Esc>i
 inoremap[[ [
-inoremap{ <Esc>o{<CR>}<Esc>
+inoremap{ <Esc>o{<CR>}<Esc>O
 inoremap{{ {
 inoremap" ""<Esc>i
 inoremap"" "
