@@ -12,6 +12,7 @@ set nowrap
 set tabstop=2 shiftwidth=2 expandtab
 set timeoutlen=1000 ttimeoutlen=10
 set tildeop
+set nofixendofline
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkred
 set cursorline
