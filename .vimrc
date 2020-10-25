@@ -26,8 +26,8 @@ set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=-1
 set imcmdline
-inoremap <C-j> <C-^>
-cnoremap <C-j> <C-^>
+inoremap <C-q> <C-^>
+cnoremap <C-q> <C-^>
 
 function AstyleIndent()
   if !filereadable(".astylerc") || !executable("astyle")
