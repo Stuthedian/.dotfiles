@@ -1,7 +1,7 @@
 alias g='gedit'
 alias mtargz='tar -xzf'
 alias mtarbz='tar -xjf'
-alias tips='vim ~/Docs/tips ~/Docs/key_combinations ~/Docs/todo'
+alias tips='vim ~/Docs/tips ~/Docs/key_combinations ~/Docs/todo ~/Docs/configs'
 alias :q='exit'
 alias llg='ls -lt | head -6 | tail -5'
 alias unz='tar -x -I zstd -f'
