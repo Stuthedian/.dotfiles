@@ -31,3 +31,11 @@ alias dco='dotfiles checkout'
 alias dci='dotfiles commit -m'
 alias dbr='dotfiles branch'
 alias dad='dotfiles add'
+
+bake()
+{
+  make "$@" 1>build.log
+  local result=$?
+  notify-send "done"
+  return $result
+}
