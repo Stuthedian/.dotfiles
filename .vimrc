@@ -117,12 +117,21 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#keymap#enabled = 0
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#checks = [ 'conflicts' ]
 
 "Cscope
 source /usr/local/share/gtags/gtags.vim
 source /usr/local/share/gtags/gtags-cscope.vim
 set csprg=gtags-cscope
-silent! cs add /home/default/Docs/me-group-2.4.0/GTAGS
+
+if stridx(getcwd(), "me-group-3.0.0-2nd") != -1
+  silent! cs add /media/hdd/home/default/Docs/me-group-3.0.0-2nd/GTAGS
+elseif stridx(getcwd(), "me-group-3.0.0-3nd") != -1
+  silent! cs add /media/hdd/home/default/Docs/me-group-3.0.0-3nd/GTAGS
+else
+  silent! cs add /media/hdd/home/default/Docs/me-group-3.0.0/GTAGS
+endif
 
 "Find this C symbol
 nnoremap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
