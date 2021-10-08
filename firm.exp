@@ -1,0 +1,44 @@
+#! /usr/bin/expect -f
+spawn ssh 192.168.192.201 -l user
+expect "user"
+send "password\n"
+exp_internal -f exp_log 0
+while 1 {
+  interact {
+    eof break
+    -o -nobuffer "Firmware has been copied and installed successfully" { send "firmware select alternate\r"; return }
+    -nobuffer "System successfully started" { send "admin\r"; expect "Password:"; send "password\r" }
+  }
+  stty cooked 
+  expect -re "\[0-1]/ME5\[0-2]00:"
+  expect -re "\[0-1]/ME5\[0-2]00:"
+  send "reload system\r"
+  expect "Do you really want to reload system?"
+  send "y\r"
+}
+#after exiting from interact expect detects an error and 'break' doesn't help
+#loop should end in send "y\r"
+#try to remove 'stty cooked'
+#it worked! finally I saw 'reload system' phrase printed out to the terminal.
+#Question is - is it so neccessary to have expect commands with the same pattern and
+#does 'stty cooked' does actually anything?
+#interact  "has" {send "firmware select alternate\r"; return}
+#interact -reset timeout 1 return
+#puts "bzinga"
+#expect "ME5200"  #<- for some reason this pattern never matches and expect just returns on timeout
+#expect "ME5200"
+#send "y"
+# -nobuffer works as expected
+#    expect "0/ME5200:"; send "reload system"; }
+
+#it worked without echo but characters got eaten up by expect
+#make autopaster of password for ssh?
+#                        expect "0/ME5100:";
+#                        send "reload system\r";
+#                        expect "you really want";
+#                        send "y"}
+  #-o "Enter server" {send "user1\r";}
+
+#  "successfully started" { send "admin\r";
+#                           expect "Password";
+#                           send "password\r"}
