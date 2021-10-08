@@ -37,8 +37,6 @@ function AstyleIndent()
   silent edit
 endfunction
 
-autocmd BufWritePost *.c,*.h :silent call AstyleIndent()
-
 filetype on
 autocmd FileType c :set cindent
 

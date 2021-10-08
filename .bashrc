@@ -118,9 +118,6 @@ fi
 
 export PS1="\[\e[104m\]$SHLVL\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
 export PATH=$PATH:~/diff-so-fancy:/usr/games
-if [ "$PWD" = "/home/default" ]; then
-    cd ~/Docs/me-group-2.4.0
-fi
 export EDITOR=vim
 set -o vi # Vi-mode in bash
 . ~/.bash_functions
