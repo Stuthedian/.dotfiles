@@ -2,12 +2,13 @@
 spawn ssh 192.168.192.201 -l user
 expect "user"
 send "password\n"
-exp_internal -f exp_log 0
+#exp_internal -f exp_log 0
+exp_internal -f exp_log2 0
 while 1 {
   interact {
-    eof break
     -o -nobuffer "Firmware has been copied and installed successfully" { send "firmware select alternate\r"; return }
     -nobuffer "System successfully started" { send "admin\r"; expect "Password:"; send "password\r" }
+    eof exit
   }
   stty cooked 
   expect -re "\[0-1]/ME5\[0-2]00:"
