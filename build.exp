@@ -1,0 +1,36 @@
+#! /usr/bin/expect -f
+
+proc tftp_copy {package device} {
+  set tftp "/media/hdd/srv/tftp"
+  set cmd "cat .builderConfig.cfg | grep build_sources_path | cut -d= -f2"
+  #global set package $interact_out(1,string)
+  #global set device $interact_out(2,string)
+  set rslt [exec sh -c $cmd ]
+
+  if {$device == "fmc16"} {
+    set path "$rslt/base/me5000/out/$device"
+  } else {
+    set path "$rslt/base/$device/out/$device"
+  }
+  set file "$path/$package"
+  exec sh -c "cp $file $tftp"
+  puts "Copied firmware to tftp\n"
+  exec sh -c "notify-send '$package uploaded to tftp'"
+  return
+}
+
+spawn ./builder.sh shell
+
+interact  {
+  -o -nobuffer -re "create distribution package: (firmware.*(fmc16|me5100|me5200))" {
+    expect "blocks";
+    tftp_copy $interact_out(1,string) $interact_out(2,string);
+  }
+  eof exit
+}
+
+#puts "$rslt\n"
+#puts "$path\n"
+#exp_internal -f exp_build_log 0
+#notify send firmware $device is done
+
