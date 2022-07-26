@@ -18,6 +18,8 @@ alias gco='git checkout'
 alias gci='git commit -m'
 alias gbr='git branch'
 alias gad='git add'
+alias grbi='git rebase -i'
+alias grbc='git rebase --continue'
 
 #Git dotfiles
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
