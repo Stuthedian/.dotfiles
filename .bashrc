@@ -116,7 +116,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PS1="\[\e[104m\]$SHLVL\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
+#Using just bare value of $SHLVL yields the value of '2', probably because bash session started inside of tmux
+export PS1="\[\e[104m\]$((SHLVL-1))\[\e[43m\]\[\e[30m\]\w\[\e[37;44m\]\$(__git_ps1 '(%s)')\[\e[0m\]\n\[\e[36;1m\]\$\[\e[0m\] "
 export PATH=$PATH:~/diff-so-fancy:/usr/games
 export EDITOR=vim
 set -o vi # Vi-mode in bash
