@@ -28,6 +28,11 @@ interact  {
     expect "blocks";
     tftp_copy $interact_out(1,string) $interact_out(2,string);
   }
+
+  -nobuffer "make: \*\*\*" {
+    exec sh -c "notify-send 'Build is failed'"
+  }
+
   eof exit
 }
 
