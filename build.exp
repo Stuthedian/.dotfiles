@@ -9,6 +9,8 @@ proc tftp_copy {package device} {
 
   if {$device == "fmc16"} {
     set path "$rslt/base/me5000/out/$device"
+  } elseif {$device == "fmc32"} {
+    set path "$rslt/base/me5000m/out/$device"
   } else {
     set path "$rslt/base/$device/out/$device"
   }
@@ -22,7 +24,7 @@ proc tftp_copy {package device} {
 spawn ./builder.sh shell
 
 interact  {
-  -o -nobuffer -re "create distribution package: (firmware.*(fmc16|me5100|me5200))" {
+  -o -nobuffer -re "create distribution package: (firmware.*(fmc16|fmc32|me5100|me5200))" {
     expect "blocks";
     tftp_copy $interact_out(1,string) $interact_out(2,string);
   }
