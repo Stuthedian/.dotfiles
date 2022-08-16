@@ -25,7 +25,7 @@ spawn ./builder.sh shell
 
 interact  {
   -o -nobuffer -re "create distribution package: (firmware.*(fmc16|fmc32|me5100|me5200))" {
-    expect "blocks";
+    expect -timeout 100 "blocks";
     tftp_copy $interact_out(1,string) $interact_out(2,string);
   }
 
