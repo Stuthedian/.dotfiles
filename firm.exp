@@ -2,7 +2,7 @@
 spawn ssh -o PubkeyAuthentication=no 192.168.192.201 -l user
 expect "user"
 send "password\n"
-exp_internal -f exp_log2 0
+
 while 1 {
   interact {
     -o -nobuffer "Firmware has been copied and installed successfully" { send "firmware select alternate\r";
@@ -17,10 +17,6 @@ while 1 {
                                               send "password\r";
                                               exec sh -c "notify-send 'Device started'";
                                               return }
-    -nobuffer -re "WARNING: process '.*' \(pid \d*\) got SIG" {
-                                              exec sh -c "notify-send 'Device: process got signal'"
-                                              return }
     eof exit
   }
 }
-#Question is - is it so neccessary to have expect commands with the same pattern and
