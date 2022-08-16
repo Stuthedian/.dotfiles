@@ -1,5 +1,5 @@
 #! /usr/bin/expect -f
-spawn ssh 192.168.192.201 -l user
+spawn ssh -o PubkeyAuthentication=no 192.168.192.201 -l user
 expect "user"
 send "password\n"
 exp_internal -f exp_log2 0
